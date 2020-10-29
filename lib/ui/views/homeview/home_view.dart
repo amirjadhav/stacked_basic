@@ -9,11 +9,11 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder.nonReactive(
+    return ViewModelBuilder<HomeViewModel>.nonReactive(
       disposeViewModel: true,
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
-          title: Text('Homepage'),
+          title: Text('HomeView'),
         ),
         body: Center(
           child: Column(
@@ -21,10 +21,16 @@ class HomeView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'Home Page',
-                style: TextStyle(fontSize: 30),
+                model.viewTitle,
+                style: TextStyle(
+                    fontSize: 35,
+                    color: Colors.amber,
+                    fontWeight: FontWeight.bold),
               ),
-              Text('You are not logged in....click on button to login page'),
+              model.isLoggedIn()
+                  ? Text('You are Logged in Redirecting to Home Page')
+                  : Text(
+                      'You are not logged in....click on button to login page'),
               RaisedButton(
                 child: Row(
                   mainAxisSize: MainAxisSize.min,

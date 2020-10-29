@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_basic/app/locator.dart';
-import 'package:stacked_basic/app/loginstatus.dart';
 import 'package:stacked_basic/ui/views/loginview/login_viewmodel.dart';
 
 class LoginView extends StatelessWidget {
@@ -14,7 +13,7 @@ class LoginView extends StatelessWidget {
     return ViewModelBuilder<LoginViewModel>.nonReactive(
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
-          title: Text('Login'),
+          title: Text(model.appbartitle),
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -25,7 +24,7 @@ class LoginView extends StatelessWidget {
                 height: 100,
               ),
               Text(
-                'Login Page',
+                model.loginviewtitle,
                 style: TextStyle(color: Colors.blueGrey, fontSize: 24),
               ),
               SizedBox(height: 50),
@@ -35,8 +34,8 @@ class LoginView extends StatelessWidget {
                 autofocus: true,
                 cursorColor: Colors.amber,
                 decoration: InputDecoration(
-                  labelText: 'User Name',
-                  hintText: 'Enter User name',
+                  labelText: model.usernamelabel,
+                  hintText: model.usernamehint,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(5.0),
                   ),
@@ -47,11 +46,10 @@ class LoginView extends StatelessWidget {
                 onSubmitted: (value) => _passwordcontroller.text = value,
                 controller: _passwordcontroller,
                 obscureText: true,
-                autofocus: true,
                 cursorColor: Colors.amber,
                 decoration: InputDecoration(
-                  labelText: 'Password',
-                  hintText: 'Enter Password',
+                  labelText: model.passlabel,
+                  hintText: model.passhint,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(5.0),
                   ),
@@ -61,12 +59,9 @@ class LoginView extends StatelessWidget {
               RaisedButton(
                 color: Colors.lightBlue,
                 onPressed: () {
-                  if (_usernamecontroller.text == 'admin' &&
-                      _passwordcontroller.text == 'admin') {
-                    loginstatus = true;
-                    _showMyDialog(context);
-                  }
-                  //Navigator.pop(context);
+                  bool result = model.verifyUser(
+                      _usernamecontroller.text, _passwordcontroller.text);
+                  if (result) _showMyDialog(context, locator<LoginViewModel>());
                 },
                 child: Text(
                   'Login',
@@ -81,27 +76,28 @@ class LoginView extends StatelessWidget {
     );
   }
 
-  Future<void> _showMyDialog(BuildContext context) async {
+  Future<void> _showMyDialog(BuildContext context, LoginViewModel model) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('AlertDialog Title'),
+          title: Text(model.dialogheading),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Login Success...'),
-                Text('Redirecting to Home Page'),
+                Text(model.dialogtitle),
+                Text(model.dialgosubtitle),
               ],
             ),
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('ok'),
+              child: Text(model.dialogbuttontext),
               onPressed: () {
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
+                model.navToHomePage();
               },
             ),
           ],

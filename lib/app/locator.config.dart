@@ -8,6 +8,7 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../ui/views/homePage/homepage_viewmodel.dart';
 import '../ui/views/homeview/home_viewmodel.dart';
 import '../ui/views/loginview/login_viewmodel.dart';
 import '../services/third_party_services.dart';
@@ -23,6 +24,7 @@ GetIt $initGetIt(
   final gh = GetItHelper(get, environment, environmentFilter);
   final thirdPartyServicesModule = _$ThirdPartyServicesModule();
   gh.lazySingleton<DialogService>(() => thirdPartyServicesModule.dialogService);
+  gh.lazySingleton<HomePageViewModel>(() => HomePageViewModel());
   gh.lazySingleton<HomeViewModel>(() => HomeViewModel());
   gh.lazySingleton<LoginViewModel>(() => LoginViewModel());
   gh.lazySingleton<NavigationService>(

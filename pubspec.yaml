@@ -26,6 +26,7 @@ dependencies:
   auto_route: ^0.6.9
   cupertino_icons: ^1.0.0
   get_it: ^5.0.1
+  http: ^0.12.2
   injectable: ^1.0.5
   stacked: ^1.7.6
   stacked_services: ^0.5.4+4
