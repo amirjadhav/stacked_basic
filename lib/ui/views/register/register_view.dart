@@ -7,20 +7,21 @@ import 'package:stacked_basic/app/router.gr.dart';
 import 'package:stacked_basic/services/usermanagement.dart';
 import 'package:stacked_basic/ui/views/loginview/login_viewmodel.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:stacked_basic/ui/views/register/register_viewmodel.dart';
 
-class LoginView extends StatefulWidget {
-  const LoginView({Key key}) : super(key: key);
+class RegisterView extends StatefulWidget {
+  const RegisterView({Key key}) : super(key: key);
 
   @override
-  _LoginViewState createState() => _LoginViewState();
+  _RegisterViewState createState() => _RegisterViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _RegisterViewState extends State<RegisterView> {
   @override
   Widget build(BuildContext context) {
     TextEditingController _usernamecontroller = new TextEditingController();
     TextEditingController _passwordcontroller = new TextEditingController();
-    return ViewModelBuilder<LoginViewModel>.nonReactive(
+    return ViewModelBuilder<RegisterViewModel>.nonReactive(
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
           title: Text(model.appbartitle),
@@ -67,35 +68,36 @@ class _LoginViewState extends State<LoginView> {
                   ),
                 ),
                 SizedBox(height: 20),
-                SignInButton(
-                  Buttons.Email,
+                SizedBox(
+                  height: 30,
+                ),
+                SignInButtonBuilder(
+                  backgroundColor: Colors.grey,
+                  text: 'Sign Up with Email',
+                  icon: Icons.mail,
                   onPressed: () {
-                    FirebaseAuth.instance
-                        .signInWithEmailAndPassword(
-                            email: _usernamecontroller.text,
-                            password: _passwordcontroller.text)
-                        .then((UserCredential SignInUser) {
-                      Navigator.of(context).pop();
-                    }).catchError((e) {
-                      print(e);
-                    });
+                    if (!(_usernamecontroller.text.isEmpty &&
+                        _passwordcontroller.text.isEmpty)) {
+                      FirebaseAuth.instance
+                          .createUserWithEmailAndPassword(
+                              email: _usernamecontroller.text,
+                              password: _passwordcontroller.text)
+                          .then((UserCredential SignInUser) {
+                        print('user strored');
+                        SignInUser.credential;
+                        UserManagement().storeNewUser(SignInUser, context);
+                      }).catchError((e) {
+                        print(e);
+                      });
+                    }
                   },
                 ),
-                SizedBox(height: 30),
-                SignInButtonBuilder(
-                    icon: Icons.add,
-                    backgroundColor: Colors.black38,
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/register-view');
-                    },
-                    text: 'Sign Up'),
-                Text('Dont have Account ? Sign Up here'),
               ],
             ),
           ),
         ),
       ),
-      viewModelBuilder: () => locator<LoginViewModel>(),
+      viewModelBuilder: () => locator<RegisterViewModel>(),
     );
   }
 }

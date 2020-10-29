@@ -11,6 +11,7 @@ import 'package:stacked_services/stacked_services.dart';
 import '../ui/views/homePage/homepage_viewmodel.dart';
 import '../ui/views/homeview/home_viewmodel.dart';
 import '../ui/views/loginview/login_viewmodel.dart';
+import '../ui/views/register/register_viewmodel.dart';
 import '../services/third_party_services.dart';
 
 /// adds generated dependencies
@@ -29,6 +30,7 @@ GetIt $initGetIt(
   gh.lazySingleton<LoginViewModel>(() => LoginViewModel());
   gh.lazySingleton<NavigationService>(
       () => thirdPartyServicesModule.navigationService);
+  gh.lazySingleton<RegisterViewModel>(() => RegisterViewModel());
   return get;
 }
 

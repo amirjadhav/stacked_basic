@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_basic/app/locator.dart';
 import 'package:stacked_basic/app/loginstatus.dart';
+import 'package:stacked_basic/app/router.gr.dart';
+import 'package:stacked_basic/ui/views/homePage/homepage_view.dart';
 import 'package:stacked_basic/ui/views/homeview/home_viewmodel.dart';
 
 class HomeView extends StatelessWidget {
@@ -32,27 +34,32 @@ class HomeView extends StatelessWidget {
                   : Text(
                       'You are not logged in....click on button to login page'),
               RaisedButton(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Text(
-                      'Login Page    ',
-                      style: TextStyle(color: Colors.blue),
-                    ),
-                    Icon(
-                      Icons.forward,
-                      color: Colors.blue,
-                    ),
-                  ],
-                ),
-                onPressed: () {
-                  if (!loginstatus)
-                    model.navigatetoLogin();
-                  else
-                    _showMyDialog(context);
-                },
-              ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Text(
+                        'Login Page    ',
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                      Icon(
+                        Icons.forward,
+                        color: Colors.blue,
+                      ),
+                    ],
+                  ),
+                  onPressed: () {
+                    if (!loginstatus) {
+                      print('inside login check: $loginstatus');
+                      model.navigatetoLogin();
+                    } else {
+                      _showMyDialog(context);
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => HomePage()));
+                    }
+                  }),
             ],
           ),
         ),
