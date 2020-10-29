@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_basic/app/locator.dart';
 import 'package:stacked_basic/app/loginstatus.dart';
-import 'package:stacked_basic/app/router.gr.dart';
 import 'package:stacked_basic/ui/views/homePage/homepage_view.dart';
 import 'package:stacked_basic/ui/views/homeview/home_viewmodel.dart';
 

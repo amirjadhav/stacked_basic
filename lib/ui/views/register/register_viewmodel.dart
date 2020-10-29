@@ -1,14 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_basic/app/locator.dart';
-import 'package:stacked_basic/app/loginstatus.dart';
-import 'package:stacked_basic/app/router.gr.dart';
-import 'package:stacked_services/stacked_services.dart';
+import 'package:stacked_basic/services/usermanagement.dart';
 
 @lazySingleton
 class RegisterViewModel extends BaseViewModel {
-  NavigationService _navigationService = locator<NavigationService>();
-
   String appbartitle = 'Register';
   String loginviewtitle = "Register Page";
   String usernamelabel = "User Name";
@@ -21,15 +18,17 @@ class RegisterViewModel extends BaseViewModel {
   String dialgosubtitle = "Redirecting to Home Page";
   String dialogbuttontext = "OK";
 
-  bool verifyUser(String username, String password) {
-    if (username == 'admin' && password == 'admin') {
-      loginstatus = true;
-      return true;
-    } else
-      return false;
-  }
-
-  Future navToHomePage() async {
-    await _navigationService.navigateTo(Routes.homePage);
+  registerUser(BuildContext context, String username, String password) {
+    if (!(username.isEmpty && password.isEmpty)) {
+      FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: username, password: password)
+          .then((UserCredential SignInUser) {
+        print('user strored');
+        SignInUser.credential;
+        UserManagement().storeNewUser(SignInUser, context);
+      }).catchError((e) {
+        print(e);
+      });
+    }
   }
 }

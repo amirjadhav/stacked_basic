@@ -1,11 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_basic/app/locator.dart';
-import 'package:stacked_basic/app/loginstatus.dart';
-import 'package:stacked_basic/app/router.gr.dart';
-import 'package:stacked_basic/services/usermanagement.dart';
-import 'package:stacked_basic/ui/views/loginview/login_viewmodel.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:stacked_basic/ui/views/register/register_viewmodel.dart';
 
@@ -76,20 +71,8 @@ class _RegisterViewState extends State<RegisterView> {
                   text: 'Sign Up with Email',
                   icon: Icons.mail,
                   onPressed: () {
-                    if (!(_usernamecontroller.text.isEmpty &&
-                        _passwordcontroller.text.isEmpty)) {
-                      FirebaseAuth.instance
-                          .createUserWithEmailAndPassword(
-                              email: _usernamecontroller.text,
-                              password: _passwordcontroller.text)
-                          .then((UserCredential SignInUser) {
-                        print('user strored');
-                        SignInUser.credential;
-                        UserManagement().storeNewUser(SignInUser, context);
-                      }).catchError((e) {
-                        print(e);
-                      });
-                    }
+                    model.registerUser(context, _usernamecontroller.text,
+                        _passwordcontroller.text);
                   },
                 ),
               ],

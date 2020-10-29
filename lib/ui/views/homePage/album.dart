@@ -12,6 +12,4 @@ class Album {
       title: json['title'],
     );
   }
-
-  List<Album> toDataList() {}
 }

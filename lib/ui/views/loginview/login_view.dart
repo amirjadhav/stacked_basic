@@ -2,9 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_basic/app/locator.dart';
-import 'package:stacked_basic/app/loginstatus.dart';
-import 'package:stacked_basic/app/router.gr.dart';
-import 'package:stacked_basic/services/usermanagement.dart';
 import 'package:stacked_basic/ui/views/loginview/login_viewmodel.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 
