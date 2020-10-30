@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_basic/app/locator.dart';
@@ -67,15 +66,8 @@ class _LoginViewState extends State<LoginView> {
                 SignInButton(
                   Buttons.Email,
                   onPressed: () {
-                    FirebaseAuth.instance
-                        .signInWithEmailAndPassword(
-                            email: _usernamecontroller.text,
-                            password: _passwordcontroller.text)
-                        .then((UserCredential SignInUser) {
-                      Navigator.of(context).pop();
-                    }).catchError((e) {
-                      print(e);
-                    });
+                    model.signinWithEmail(context, _usernamecontroller.text,
+                        _passwordcontroller.text);
                   },
                 ),
                 SizedBox(height: 30),

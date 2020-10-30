@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_basic/app/locator.dart';
@@ -31,5 +33,15 @@ class LoginViewModel extends BaseViewModel {
 
   Future navToHomePage() async {
     await _navigationService.navigateTo(Routes.homePage);
+  }
+
+  signinWithEmail(BuildContext context, String username, String password) {
+    FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: username, password: password)
+        .then((UserCredential signInUser) {
+      Navigator.of(context).pop();
+    }).catchError((e) {
+      print(e);
+    });
   }
 }

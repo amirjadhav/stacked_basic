@@ -1,7 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_basic/app/locator.dart';
-import 'package:stacked_basic/ui/views/homePage/album.dart';
+import 'package:stacked_basic/entities/album.dart';
 import 'package:stacked_basic/ui/views/homePage/homepage_viewmodel.dart';
 
 class HomePage extends StatelessWidget {
@@ -14,6 +15,13 @@ class HomePage extends StatelessWidget {
         List<Album> albumList;
         albumList = model.getAlbums();
         return Scaffold(
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              FirebaseAuth.instance.signOut();
+              Navigator.pushReplacementNamed(context, '/login-view');
+            },
+            child: Text('Log out'),
+          ),
           appBar: AppBar(
             title: Text('Homepage'),
           ),

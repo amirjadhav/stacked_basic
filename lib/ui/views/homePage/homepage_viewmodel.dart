@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:injectable/injectable.dart';
 import 'package:stacked/stacked.dart';
 import 'package:http/http.dart' as http;
-import 'package:stacked_basic/ui/views/homePage/album.dart';
+import 'package:stacked_basic/entities/album.dart';
 
 @lazySingleton
 class HomePageViewModel extends BaseViewModel {
