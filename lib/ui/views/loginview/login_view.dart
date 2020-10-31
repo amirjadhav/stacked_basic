@@ -70,6 +70,19 @@ class _LoginViewState extends State<LoginView> {
                         _passwordcontroller.text);
                   },
                 ),
+                SizedBox(height: 20),
+                SignInButton(
+                  Buttons.Google,
+                  onPressed: () {
+                    model.signInWithGoogle().then((result) {
+                      if (result != null) {
+                        Navigator.pushReplacementNamed(context, '/');
+                      }
+                    }).catchError((e) {
+                      print(e);
+                    });
+                  },
+                ),
                 SizedBox(height: 30),
                 SignInButtonBuilder(
                     icon: Icons.add,
